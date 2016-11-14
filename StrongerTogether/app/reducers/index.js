@@ -1,8 +1,8 @@
-// import { combineReducers } from 'redux';
-//
-// const rootReducer = combineReducers({
-//
-// });
+import { combineReducers } from 'redux';
+import auth from './auth';
+import loading from './loading';
 
-export default function reducer (state = initialState, action) {
-}
+export default combineReducers({
+  auth,
+  loading
+});

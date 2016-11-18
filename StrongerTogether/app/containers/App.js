@@ -1,57 +1,33 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import { ActionCreators } from '../actions'
+import * as AuthActions from './../actions/auth';
 import {Scene, Router} from 'react-native-router-flux';
-import { StyleSheet } from 'react-native';
 import Login from './../components/Login';
 import Alert from './../components/Alert';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 65,
-    paddingLeft: 10,
-    paddingRight: 10
-  },
-  header: {
-    fontSize:   30,
-    fontWeight: 'bold'
-  },
-  label: {
-    fontWeight: 'bold'
-  },
-  textInput: {
-    height: 40
-  },
-  secondaryLink: {
-    marginTop: 10,
-    textAlign: 'center'
-  }
-});
+import Splash from './../components/Splash';
+import Contacts from './../components/Contacts';
 
 const RouterWithRedux = connect()(Router);
 
 class App extends Component {
+  componentDidMount() {
+    this.props.dispatch(AuthActions.loadLocalToken());
+  }
+
   render() {
     return (
       <RouterWithRedux>
-        <Scene key="root">
-          <Scene key="login" component={Login} styles={styles} title="Login" newAccount={false} />
-          <Scene key="register" component={Login} styles={styles} title="Register" newAccount={true} />
-          <Scene key="alert" component={Alert} styles={styles} title="Alert" />
+        <Scene key='root'>
+          <Scene key='splash' component={Splash} title='Stronger Together' initial={true} />
+          <Scene key='login' component={Login} title='Login' newAccount={false} />
+          <Scene key='register' component={Login} title='Register' newAccount={true} />
+          <Scene key='alert' component={Alert} title='Stronger Together' />
+          <Scene key='contacts' component={Contacts} title='Add contacts' />
         </Scene>
       </RouterWithRedux>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ActionCreators, dispatch);
-}
-
-function mapStateToProps(state) {
-  return {};
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect()(App);

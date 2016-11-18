@@ -1,3 +1,5 @@
+import { AsyncStorage } from 'react-native';
+
 const initialState = {
   token: null
 };

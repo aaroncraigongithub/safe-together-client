@@ -1,29 +1,61 @@
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import AlertButton from './AlertButton';
+import { View, Button, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { Platform } from 'react-native';
+import BasicText from './BasicText';
+import FlatButton from './FlatButton';
+import styles from './Styles';
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onAlert: ()=> {
-      console.log('ALERT!!');
-    }
+class Alert extends Component {
+  onSendAlert() {
+    console.log('ALERT!');
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.card}>
+          <BasicText
+            styles={[styles.paragraph, styles.cardContent]}
+            content='Click the button below to send notifications to your network to let them know you need help.'
+          />
+          <Button title='Send an alert' onPress={this.onSendAlert.bind(this)} />
+        </View>
+        <View style={this.props.hasFriends ? styles.hidden : {height: 200}}>
+          <View style={styles.card}>
+            <BasicText
+              styles={[styles.cardContent, styles.h1]}
+              content='Add friends to your network'
+            />
+            <BasicText
+              styles={styles.cardContent}
+              content='You need to add friends to your network so that, in time of need, we know who to contact.'
+            />
+            <View style={styles.cardActions}>
+              <FlatButton text='Add contacts' onPress={Actions.contacts} />
+            </View>
+          </View>
+        </View>
+        <View style={this.props.hasFriends ? {height: 200} : styles.hidden }>
+          <BasicText
+            content='There are {this.props.friendCount} friends currently in your network'
+          />
+          <BasicText
+            styles={[styles.alignRight, styles.linkText]}
+            content='add more contacts'
+          />
+        </View>
+      </View>
+    );
   }
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    hasFriends:  state.friends.count > 0,
+    friendCount: state.friends.count
+  };
 }
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  return Object.assign({}, stateProps, dispatchProps, {
-    styles: ownProps.styles
-  });
-}
-
-const Alert = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
-)(AlertButton);
-
-export default Alert;
+export default connect(mapStateToProps)(Alert);

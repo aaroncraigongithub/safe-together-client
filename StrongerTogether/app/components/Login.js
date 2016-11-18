@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 import LoginForm from './LoginForm';
 import { Actions } from 'react-native-router-flux';
 import * as AuthActions from './../actions/auth';
+import BasicText from './BasicText';
+import styles from './Styles';
 
 const params = {
   email:    '',
@@ -28,9 +30,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSecondary: () => {
       Actions.register();
-    },
-    componentWillMount: () => {
-      console.log("componentWillMount()");
     }
   }
 }
@@ -67,7 +66,6 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
   params.register = ownProps.newAccount;
 
   return Object.assign({}, stateProps, dispatchProps, {
-    styles:        ownProps.styles,
     secondaryText: params.register ? '' : 'or create an account',
     buttonText:    params.register ? 'Register' : 'Login'
   });

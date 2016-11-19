@@ -1,80 +1,102 @@
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import LoginForm from './LoginForm';
 import { Actions } from 'react-native-router-flux';
 import * as AuthActions from './../actions/auth';
+import { View, TextInput, Button } from 'react-native';
 import BasicText from './BasicText';
+import AppInfo from './AppInfo';
+import AsyncButton from './AsyncButton';
 import styles from './Styles';
 
-const params = {
-  email:    '',
-  password: '',
-  register: false
-};
+class Login extends Component {
+  constructor(props) {
+    super(props);
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onLogin: ()=> {
-      if (params.register) {
-        dispatch(AuthActions.register(params.email, params.password));
-      } else {
-        dispatch(AuthActions.login(params.email, params.password));
-      }
-    },
-    onEmail: (email) => {
-      params.email = email;
-      dispatch(AuthActions.updateLoginEmail(email));
-    },
-    onPassword: (password) => {
-      params.password = password;
-      dispatch(AuthActions.updateLoginPassword(password));
-    },
-    onSecondary: () => {
-      Actions.register();
+    this.state = {
+      isButtonDisabled: true,
+      email:            '',
+      password:         '',
+      secondaryText:    props.newAccount ? '' : 'or create an account',
+      buttonText:       props.newAccount ? 'Register' : 'Login',
+      waiting:          false
+    };
+  }
+
+  onEmail(email) {
+    this.state.email = email;
+
+    this.setState({isButtonDisabled: this.isButtonDisabled()});
+  }
+
+  onPassword(password) {
+    this.state.password = password;
+
+    this.setState({isButtonDisabled: this.isButtonDisabled()});
+  }
+
+  onLogin() {
+    const email = this.state.email;
+    const password = this.state.password;
+
+    this.setState({waiting: true});
+
+    if (this.props.newAccount) {
+      this.props.dispatch(AuthActions.register(email, password));
+    } else {
+      this.props.dispatch(AuthActions.login(email, password));
     }
   }
-}
 
-const isButtonDisabled = (state) => {
-  const email = state.auth.email;
-  const password = state.auth.password;
-
-  if (!email || !password) {
-    return true;
+  onRegister() {
+    Actions.register();
   }
 
-  if (email.indexOf('@') < 0) {
-    return true;
+  isButtonDisabled() {
+    const email = this.state.email;
+    const password = this.state.password;
+
+    if (!email || !password) {
+      return true;
+    }
+
+    if (email.indexOf('@') < 0) {
+      return true;
+    }
+
+    if (email.indexOf('.') < 0) {
+      return true;
+    }
+
+    return false;
   }
 
-  if (email.indexOf('.') < 0) {
-    return true;
+  render() {
+    return (
+      <View style={styles.container}>
+        <AppInfo />
+        <View style={styles.card}>
+          <BasicText
+            styles={styles.label}
+            content='Email'
+          />
+          <TextInput style={styles.textInput} onChangeText={this.onEmail.bind(this)} keyboardType='email-address' placeholder='your email address' returnKeyType='next' returnKeyLabel='next' />
+          <BasicText
+            styles={styles.label}
+            content='Password'
+          />
+          <TextInput style={styles.textInput} onChangeText={this.onPassword.bind(this)} placeholder='your password' returnKeyType='done' returnKeyLabel='done' secureTextEntry={true} />
+        </View>
+        <View style={[styles.card]}>
+          <AsyncButton waiting={this.state.waiting} title={this.state.buttonText} onPress={this.onLogin.bind(this)} disabled={this.state.isButtonDisabled} />
+          <BasicText
+            onPress={this.onRegister.bind(this)}
+            styles={styles.secondaryLink}
+            content={this.state.secondaryText}
+          />
+        </View>
+      </View>
+    );
   }
-
-  return false;
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loading:        state.loading.isLoading,
-    buttonDisabled: isButtonDisabled(state),
-    email:          state.auth.email,
-    password:       state.auth.password
-  };
-}
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
-  params.register = ownProps.newAccount;
-
-  return Object.assign({}, stateProps, dispatchProps, {
-    secondaryText: params.register ? '' : 'or create an account',
-    buttonText:    params.register ? 'Register' : 'Login'
-  });
-}
-
-const Login = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps
-)(LoginForm);
-
-export default Login;
+export default connect()(Login);

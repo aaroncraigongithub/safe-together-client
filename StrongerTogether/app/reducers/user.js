@@ -1,12 +1,12 @@
 const initialState = {
-  isLoading: false
+  user: null
 };
 
-export default function loading(state = initialState, action) {
+export default function auth(state = initialState, action) {
   switch(action.type) {
-    case 'LOADING':
+    case 'STORE_USER':
       return Object.assign({}, state, {
-        isLoading: action.loading
+        user: action.user
       });
 
       break;

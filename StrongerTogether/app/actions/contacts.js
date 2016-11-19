@@ -1,4 +1,3 @@
-import * as LoadingActions from './loading';
 import Api from './../lib/api';
 import { Alert, AsyncStorage } from 'react-native';
 import ContactsManager from './../lib/contacts';
@@ -24,7 +23,7 @@ export function loadContacts() {
 
 export function updateState(state) {
   return {
-    type: 'UPDATE_STATE',
+    type: 'UPDATE_CONTACTS_STATE',
     state: state
   };
 }

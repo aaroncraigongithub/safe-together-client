@@ -1,4 +1,3 @@
-import * as LoadingActions from './loading';
 import * as ContactActions from './contacts';
 import Api from './../lib/api';
 import { Alert, AsyncStorage } from 'react-native';
@@ -11,14 +10,25 @@ export function loadFriends() {
       dispatch(updateFriends(friends));
     })
     .catch(error => {
-      console.log("ERROR getting contacts", error);
+      console.log("ERROR getting friends", error);
+    });
+  }
+}
+
+export function confirm(token) {
+  return (dispatch) => {
+    return Api.confirmFriend(token).then(() => {
+      dispatch(loadFriends());
+    })
+    .catch(error=> {
+      console.log("error accepting invitation", error);
     });
   }
 }
 
 export function updateState(state) {
   return {
-    type: 'UPDATE_STATE',
+    type: 'UPDATE_FRIENDS_STATE',
     state: state
   };
 }

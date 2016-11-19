@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import BasicText from './BasicText';
+import { Button } from 'react-native';
 import styles from './Styles';
 
 class FlatButton extends Component {

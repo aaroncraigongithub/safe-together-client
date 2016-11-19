@@ -5,33 +5,24 @@ const Api = {
   baseUrl: 'https://stronger-together.herokuapp.com/v1/',
 
   setToken(token) {
-    console.log('TOKEN', token);
     this.token = token;
   },
 
+  confirmAccount(token) {
+    return this.jsonPut('users/confirm', {token: token});
+  },
+
   login(email, password) {
-    return this.post('sessions', {
-      email: email,
+    return this.jsonPost('sessions', {
+      email:    email,
       password: password,
-    })
-    .then(response=> {
-      return this.parseResponse(response);
-    })
-    .then(json=> {
-      return json.token;
     });
   },
 
   register(email, password) {
-    return this.post('users', {
-      email: email,
+    return this.jsonPost('users', {
+      email:    email,
       password: password,
-    })
-    .then(response=> {
-      return this.parseResponse(response)
-    })
-    .then(json=> {
-      return json.token;
     });
   },
 
@@ -41,6 +32,10 @@ const Api = {
 
   getFriends() {
     return this.jsonGet('friends');
+  },
+
+  confirmFriend(token) {
+    return this.put('friends/confirm', {token: token});
   },
 
   jsonGet(endpoint, params = {}) {
@@ -73,17 +68,38 @@ const Api = {
   },
 
   jsonPost(endpoint, params = {}) {
-    return this
-             .post(endpoint, params)
-             .then(response => (this.parseRecords(response)));
+    return this.jsonAction('POST', endpoint, params);
   },
 
   post(endpoint, params = {}) {
-    return fetch(this.baseUrl + endpoint, {
-      method:  'POST',
+    return this.action('POST', endpoint, params);
+  },
+
+  jsonPut(endpoint, params = {}) {
+    return this.jsonAction('PUT', endpoint, params);
+  },
+
+  put(endpoint, params = {}) {
+    return this.action('PUT', endpoint, params);
+  },
+
+  jsonAction(method, endpoint, payload = {}) {
+    return this
+              .action(method, endpoint, payload)
+              .then(response => (this.parseRecords(response)));
+  },
+
+  action(method, endpoint, payload = null) {
+    const params = {
+      method:  method,
       headers: this.requestHeader(),
-      body:    JSON.stringify(params)
-    });
+    };
+
+    if (payload) {
+      params.body = JSON.stringify(payload);
+    }
+
+    return fetch(this.baseUrl + endpoint, params);
   },
 
   parseRecords(response) {

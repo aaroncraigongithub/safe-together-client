@@ -83,6 +83,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10
   },
+  spinnerLabel: {
+    marginLeft: 10
+  },
 
   // Cards
   card: {

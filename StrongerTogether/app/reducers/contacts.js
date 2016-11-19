@@ -19,7 +19,7 @@ export default function contacts(state = initialState, action) {
       });
 
       break;
-    case 'UPDATE_STATE':
+    case 'UPDATE_CONTACTS_STATE':
       return Object.assign({}, state, {
         txState: action.state
       });

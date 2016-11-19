@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, Image } from 'react-native';
+import { View, Image } from 'react-native';
 import BasicText from './BasicText';
 import styles from './Styles';
 

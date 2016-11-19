@@ -19,7 +19,7 @@ export default function friends(state = initialState, action) {
       });
 
       break;
-    case 'UPDATE_STATE':
+    case 'UPDATE_FRIENDS_STATE':
       return Object.assign({}, state, {
         txState: action.state
       });

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { loadFriends } from './../actions/friends';
-import { alert } from './../actions/alert';
+import Api from './../lib/api';
+import Messages from './../lib/messages';
 import AddContactsButton from './AddContactsButton';
 import AlertButton from './AlertButton';
 import FriendCount from './FriendCount';
@@ -16,7 +17,16 @@ class Alert extends Component {
   }
 
   onSendAlert() {
-    // this.props.dispatch(alert());
+    Api.alert().then(() => {
+      Messages.alert('Alert sent', 'The alert has been sent to ' + this.props.friendCount + ' friends.');
+    })
+    .catch(error => {
+      let title   = 'There was a problem';
+      let message = error.error ?
+        error.error.message : 'There was an error sending this alert.';
+
+      Messages.alert(title, message);
+    });
   }
 
   render() {

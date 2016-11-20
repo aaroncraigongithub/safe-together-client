@@ -8,6 +8,10 @@ const Api = {
     this.token = token;
   },
 
+  alert() {
+    return this.post('alerts');
+  },
+
   confirmAccount(token) {
     return this.jsonPut('users/confirm', {token: token});
   },

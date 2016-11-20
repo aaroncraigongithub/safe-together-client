@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import * as AuthActions from './../actions/auth';
-import { View, TextInput, Button } from 'react-native';
+import { ScrollView, View, TextInput, Button } from 'react-native';
 import BasicText from './BasicText';
 import AppInfo from './AppInfo';
 import AsyncButton from './AsyncButton';
@@ -72,7 +72,7 @@ class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <AppInfo />
         <View style={styles.card}>
           <BasicText
@@ -94,7 +94,7 @@ class Login extends Component {
             content={this.state.secondaryText}
           />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

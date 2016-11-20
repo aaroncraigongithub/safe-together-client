@@ -1,2 +1,2 @@
-# stronger-together-client
-Client app for the Stronger Together app.
+# safe-together-client
+Client app for the Safe Together app.

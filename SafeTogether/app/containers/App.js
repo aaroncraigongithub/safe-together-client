@@ -10,6 +10,7 @@ import Splash from './../components/Splash';
 import Contacts from './../components/Contacts';
 import ConfirmFriend from './../components/ConfirmFriend';
 import ConfirmAccount from './../components/ConfirmAccount';
+import ConfirmRequired from './../components/ConfirmRequired';
 
 const RouterWithRedux = connect()(Router);
 
@@ -71,6 +72,7 @@ class App extends Component {
           <Scene key='contacts' component={Contacts} title='Add contacts' />
           <Scene key='confirmFriend' component={ConfirmFriend} title='Invitation accepted' />
           <Scene key='confirmAccount' component={ConfirmAccount} title='Account verified' />
+          <Scene key='confirmRequired' component={ConfirmRequired} title='Account verification pending' />
         </Scene>
       </RouterWithRedux>
     );

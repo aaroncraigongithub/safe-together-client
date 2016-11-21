@@ -36,7 +36,11 @@ export function updateUser(user) {
       Api.setToken(user.attributes.token);
 
       return AsyncStorage.setItem('user', JSON.stringify(user)).then(()=> {
-        Actions.alert({type: 'replace'});
+        if (user.confirmedAt) {
+          Actions.alert({type: 'replace'});
+        } else {
+          Actions.confirmRequired({type: 'replace'});
+        }
       });
     } else {
       Actions.login({type: 'replace'});

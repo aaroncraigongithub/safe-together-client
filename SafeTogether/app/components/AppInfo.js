@@ -12,12 +12,8 @@ class AppInfo extends Component {
           <Image source={require('./../img/welcome.jpg')} />
         </View>
         <BasicText
-          styles={[styles.cardContent, styles.h1]}
-          content='Welcome to the Stronger Together app.'
-        />
-        <BasicText
           styles={[styles.cardContent, styles.paragraph]}
-          content='Welcome to the Stronger Together movement.  We are a group of people who are ready to stand against racism, bigotry, and sexual harassment.'
+          content='Welcome to the Safe Together movement.  We are a group of people who are ready to stand against racism, bigotry, and sexual harassment.'
         />
         <BasicText
           styles={[styles.cardContent, styles.paragraph]}

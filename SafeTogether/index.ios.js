@@ -25,10 +25,10 @@ function configureStore(initialState) {
 
 const store = configureStore({});
 
-const StrongerTogetherApp = () => (
+const SafeTogetherApp = () => (
   <Provider store={store}>
     <App />
   </Provider>
 )
 
-AppRegistry.registerComponent('StrongerTogether', () => StrongerTogetherApp);
+AppRegistry.registerComponent('SafeTogether', () => SafeTogetherApp);

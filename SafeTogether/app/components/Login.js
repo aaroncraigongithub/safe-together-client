@@ -72,29 +72,35 @@ class Login extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <AppInfo />
-        <View style={styles.card}>
-          <BasicText
-            styles={styles.label}
-            content='Email'
-          />
-          <TextInput style={styles.textInput} onChangeText={this.onEmail.bind(this)} keyboardType='email-address' placeholder='your email address' returnKeyType='next' returnKeyLabel='next' />
-          <BasicText
-            styles={styles.label}
-            content='Password'
-          />
-          <TextInput style={styles.textInput} onChangeText={this.onPassword.bind(this)} placeholder='your password' returnKeyType='done' returnKeyLabel='done' secureTextEntry={true} />
-        </View>
-        <View style={[styles.card]}>
-          <AsyncButton waiting={this.state.waiting} title={this.state.buttonText} onPress={this.onLogin.bind(this)} disabled={this.state.isButtonDisabled} />
-          <BasicText
-            onPress={this.onRegister.bind(this)}
-            styles={styles.secondaryLink}
-            content={this.state.secondaryText}
-          />
-        </View>
-      </ScrollView>
+      <View style={styles.container}>
+        <ScrollView style={{flex: 1}}>
+          <View style={styles.card}>
+            <BasicText
+              styles={[styles.cardContent, styles.h1]}
+              content='Safe Together'
+            />
+            <BasicText
+              styles={styles.label}
+              content='Email'
+            />
+            <TextInput style={styles.textInput} onChangeText={this.onEmail.bind(this)} keyboardType='email-address' placeholder='your email address' returnKeyType='next' returnKeyLabel='next' />
+            <BasicText
+              styles={styles.label}
+              content='Password'
+            />
+            <TextInput style={styles.textInput} onChangeText={this.onPassword.bind(this)} placeholder='your password' returnKeyType='done' returnKeyLabel='done' secureTextEntry={true} />
+          </View>
+          <View style={[styles.card]}>
+            <AsyncButton waiting={this.state.waiting} title={this.state.buttonText} onPress={this.onLogin.bind(this)} disabled={this.state.isButtonDisabled} />
+            <BasicText
+              onPress={this.onRegister.bind(this)}
+              styles={styles.secondaryLink}
+              content={this.state.secondaryText}
+            />
+          </View>
+          <AppInfo />
+        </ScrollView>
+      </View>
     );
   }
 }

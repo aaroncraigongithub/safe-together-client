@@ -839,6 +839,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.aaroncraig.safetogether;
 				PRODUCT_NAME = SafeTogether;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -863,6 +864,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.aaroncraig.safetogether;
 				PRODUCT_NAME = SafeTogether;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
